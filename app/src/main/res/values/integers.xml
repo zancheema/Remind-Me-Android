@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="delayed_tasks_count">1</integer>
+    <integer name="today_tasks_count">2</integer>
+    <integer name="upcoming_tasks_count">3</integer>
+</resources>

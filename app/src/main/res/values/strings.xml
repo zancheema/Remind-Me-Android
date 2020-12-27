@@ -2,4 +2,13 @@
     <string name="app_name">Remind Me</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="task_title">Maths Assignment</string>
+    <string name="task_time">2:30 PM</string>
+    <string name="task_date">Fri 12/25/2020</string>
+    <string name="task_daily">Daily</string>
+    <string name="delayed">Delayed</string>
+    <string name="today">Today</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="title">Title</string>
+    <string name="schedule">Schedule</string>
 </resources>

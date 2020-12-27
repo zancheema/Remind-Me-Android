@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="task_time_drawable_padding">8dp</dimen>
+    <dimen name="task_date_drawable_padding">4dp</dimen>
+    <dimen name="card_item_padding">8dp</dimen>
+    <dimen name="card_horizontal_margin">8dp</dimen>
+    <dimen name="card_vertical_margin">4dp</dimen>
+    <dimen name="task_time_heading_drawable_padding">32dp</dimen>
+</resources>

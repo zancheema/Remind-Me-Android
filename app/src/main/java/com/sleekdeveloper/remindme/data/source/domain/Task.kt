@@ -6,7 +6,7 @@ data class Task(
     val id: String,
     val title: String,
     val time: Timestamp,
+    val daily: Boolean,
     val completed: Boolean,
-    val favorite: Boolean,
-    val daily: Boolean
+    val important: Boolean
 )
