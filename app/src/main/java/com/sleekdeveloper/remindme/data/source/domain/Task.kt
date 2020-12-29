@@ -5,8 +5,8 @@ import java.sql.Timestamp
 data class Task(
     val id: String,
     val title: String,
-    val time: Timestamp,
-    val daily: Boolean,
-    val completed: Boolean,
-    val important: Boolean
+    val timestamp: Timestamp,
+    val daily: Boolean = false,
+    val completed: Boolean = false,
+    val important: Boolean = false
 )
