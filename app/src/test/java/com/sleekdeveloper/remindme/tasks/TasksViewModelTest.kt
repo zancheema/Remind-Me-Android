@@ -17,7 +17,6 @@ import java.sql.Timestamp
 
 @ExperimentalCoroutinesApi
 class TasksViewModelTest {
-    private lateinit var viewModel: TasksViewModel
     private lateinit var repository: FakeTestRepository
 
     @get:Rule
@@ -25,12 +24,27 @@ class TasksViewModelTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
-    val mainCoroutineRule =  MainCoroutineRule()
+    val mainCoroutineRule = MainCoroutineRule()
 
     @Before
     fun initRepository() = runBlocking {
         repository = FakeTestRepository()
-        viewModel = TasksViewModel(repository)
+    }
+
+    @Test
+    fun allTasks_ReturnsAllInsertedTasksAndSetsTasksLoadingErrorEventToFalse() = runBlocking {
+        val task1 = Task("task_1", "TITLE", Timestamp(2000L))
+        val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
+        val task3 = Task("task_3", "TITLE", Timestamp(3000L))
+        listOf(task1, task2, task3).forEach { repository.addTask(it) }
+        val viewModel = TasksViewModel(repository)
+
+        val tasks = viewModel.allTasks.getOrAwaitValue()
+        tasks.sortedBy { it.id }
+
+        assertThat(tasks, `is`(listOf(task1, task2, task3)))
+        val errorEvent = viewModel.tasksLoadingErrorEvent.getOrAwaitValue()
+        assertThat(errorEvent.getContentIfNotHandled(), `is`(false))
     }
 
     @Test
@@ -39,6 +53,7 @@ class TasksViewModelTest {
         val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
         val task3 = Task("task_3", "TITLE", Timestamp(3000L))
         listOf(task1, task2, task3).forEach { repository.addTask(it) }
+        val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.delayedTasks.getOrAwaitValue()
         tasks.sortedBy { it.id }
@@ -52,6 +67,7 @@ class TasksViewModelTest {
         val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
         val task3 = Task("task_3", "TITLE", Timestamp(3000L))
         listOf(task1, task2, task3).forEach { repository.addTask(it) }
+        val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.todayTasks.getOrAwaitValue()
 
@@ -65,6 +81,7 @@ class TasksViewModelTest {
         val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
         val task3 = Task("task_3", "TITLE", Timestamp(currentTimeMillis() + 2 * oneDayInMillis))
         listOf(task1, task2, task3).forEach { repository.addTask(it) }
+        val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.upcomingTasks.getOrAwaitValue()
 
@@ -72,7 +89,26 @@ class TasksViewModelTest {
     }
 
     @Test
+    fun allTasks_NoTasksInserted_GeneratesNoTasksEvent() {
+        val viewModel = TasksViewModel(repository)
+
+        val event = viewModel.noTasksEvent.getOrAwaitValue()
+        assertThat(event.getContentIfNotHandled(), `is`(true))
+    }
+
+    @Test
+    fun tasksReturnError_GeneratesTasksLoadingErrorEvent() {
+        repository.setError(true)
+        val viewModel = TasksViewModel(repository)
+
+        assertThat(viewModel.allTasks.getOrAwaitValue(), `is`(emptyList()))
+        val errorEvent = viewModel.tasksLoadingErrorEvent.getOrAwaitValue()
+        assertThat(errorEvent.getContentIfNotHandled(), `is`(true))
+    }
+
+    @Test
     fun addTask_GeneratesAddTaskEvent() {
+        val viewModel = TasksViewModel(repository)
         viewModel.addTask()
 
         val event = viewModel.addTaskEvent.getOrAwaitValue()
