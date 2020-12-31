@@ -16,21 +16,21 @@ class DateUtilKtTest {
     @Test
     fun isDelayed_verifiesTheDateHasPassed() {
         assertThat(yesterday.isDelayed(), `is`(true))
-        assertThat(today.isDelayed(), `is`(false))
-        assertThat(tomorrow.isDelayed(), `is`(false))
+        assertThat(yesterday.isToday(), `is`(false))
+        assertThat(yesterday.isUpcoming(), `is`(false))
     }
 
     @Test
     fun isToday_verifiesTheDateIsToday() {
-        assertThat(yesterday.isToday(), `is`(false))
+        assertThat(today.isDelayed(), `is`(false))
         assertThat(today.isToday(), `is`(true))
-        assertThat(tomorrow.isToday(), `is`(false))
+        assertThat(today.isUpcoming(), `is`(false))
     }
 
     @Test
     fun isUpcoming_verifiesTheDateIsUpcoming() {
-        assertThat(yesterday.isUpcoming(), `is`(false))
-        assertThat(today.isUpcoming(), `is`(false))
+        assertThat(tomorrow.isDelayed(), `is`(false))
+        assertThat(tomorrow.isToday(), `is`(false))
         assertThat(tomorrow.isUpcoming(), `is`(true))
     }
 }
