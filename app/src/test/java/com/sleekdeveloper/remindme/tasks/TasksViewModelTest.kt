@@ -36,7 +36,7 @@ class TasksViewModelTest {
         val task1 = Task("task_1", "TITLE", Timestamp(2000L))
         val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
         val task3 = Task("task_3", "TITLE", Timestamp(3000L))
-        listOf(task1, task2, task3).forEach { repository.addTask(it) }
+        repository.addTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.allTasks.getOrAwaitValue()
@@ -52,7 +52,7 @@ class TasksViewModelTest {
         val task1 = Task("task_1", "TITLE", Timestamp(2000L))
         val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
         val task3 = Task("task_3", "TITLE", Timestamp(3000L))
-        listOf(task1, task2, task3).forEach { repository.addTask(it) }
+        repository.addTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.delayedTasks.getOrAwaitValue()
@@ -66,7 +66,7 @@ class TasksViewModelTest {
         val task1 = Task("task_1", "TITLE", Timestamp(2000L))
         val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
         val task3 = Task("task_3", "TITLE", Timestamp(3000L))
-        listOf(task1, task2, task3).forEach { repository.addTask(it) }
+        repository.addTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.todayTasks.getOrAwaitValue()
@@ -80,7 +80,7 @@ class TasksViewModelTest {
         val task1 = Task("task_1", "TITLE", Timestamp(2000L))
         val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
         val task3 = Task("task_3", "TITLE", Timestamp(currentTimeMillis() + 2 * oneDayInMillis))
-        listOf(task1, task2, task3).forEach { repository.addTask(it) }
+        repository.addTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.upcomingTasks.getOrAwaitValue()
@@ -97,7 +97,7 @@ class TasksViewModelTest {
     }
 
     @Test
-    fun tasksReturnError_GeneratesTasksLoadingErrorEvent() {
+    fun errorLoadingTasks_GeneratesTasksLoadingErrorEvent() {
         repository.setError(true)
         val viewModel = TasksViewModel(repository)
 

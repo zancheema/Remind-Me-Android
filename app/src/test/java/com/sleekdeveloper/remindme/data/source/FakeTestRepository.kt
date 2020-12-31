@@ -28,6 +28,10 @@ class FakeTestRepository : AppRepository {
         observableTasks.value = Success(newList)
     }
 
+    override suspend fun addTasks(vararg tasks: Task) {
+        for (t in tasks) addTask(t)
+    }
+
     override suspend fun updateTask(task: Task) {
         TODO("Not yet implemented")
     }

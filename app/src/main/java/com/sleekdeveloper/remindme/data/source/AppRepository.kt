@@ -9,6 +9,8 @@ interface AppRepository {
 
     suspend fun addTask(task: Task)
 
+    suspend fun addTasks(vararg tasks: Task)
+
     suspend fun updateTask(task: Task)
 
     suspend fun deleteTask(task: Task)
