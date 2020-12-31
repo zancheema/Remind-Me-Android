@@ -14,7 +14,9 @@ import com.sleekdeveloper.remindme.util.isDelayed
 import com.sleekdeveloper.remindme.util.isToday
 import com.sleekdeveloper.remindme.util.isUpcoming
 
-class TasksViewModel(repository: AppRepository) : ViewModel() {
+class TasksViewModel(
+        repository: AppRepository
+) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val allTasks: LiveData<List<Task>> =

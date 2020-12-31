@@ -1,4 +1,4 @@
-package com.sleekdeveloper.remindme.delayedtasks
+package com.sleekdeveloper.remindme.importanttasks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,9 +9,8 @@ import com.sleekdeveloper.remindme.data.Result.Error
 import com.sleekdeveloper.remindme.data.Result.Success
 import com.sleekdeveloper.remindme.data.source.AppRepository
 import com.sleekdeveloper.remindme.data.source.domain.Task
-import com.sleekdeveloper.remindme.util.isDelayed
 
-class DelayedTasksViewModel(
+class ImportantTasksViewModel(
         repository: AppRepository
 ) : ViewModel() {
 
@@ -24,7 +23,7 @@ class DelayedTasksViewModel(
                 when (tasks) {
                     is Success -> {
                         _tasksLoadingErrorEvent.value = Event(false)
-                        tasks.data.filter { it.timestamp.isDelayed() }
+                        tasks.data.filter { it.important }
                     }
                     is Error -> {
                         _tasksLoadingErrorEvent.value = Event(true)
