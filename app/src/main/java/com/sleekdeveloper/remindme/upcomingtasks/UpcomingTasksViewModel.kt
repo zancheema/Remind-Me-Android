@@ -24,7 +24,7 @@ class UpcomingTasksViewModel(
                 when (tasks) {
                     is Success -> {
                         _tasksLoadingErrorEvent.value = Event(false)
-                        tasks.data.filter { it.timestamp.isUpcoming() }
+                        tasks.data.filter { it.date.isUpcoming() }
                     }
                     is Error -> {
                         _tasksLoadingErrorEvent.value = Event(true)

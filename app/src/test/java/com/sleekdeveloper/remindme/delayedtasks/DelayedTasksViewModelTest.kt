@@ -12,8 +12,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.lang.System.currentTimeMillis
-import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalTime
 
 @ExperimentalCoroutinesApi
 class DelayedTasksViewModelTest {
@@ -33,9 +33,9 @@ class DelayedTasksViewModelTest {
 
     @Test
     fun tasks_LoadDelayedTasks() = runBlocking {
-        val task1 = Task("task_1", "TITLE", Timestamp(currentTimeMillis()))
-        val task2 = Task("task_2", "TITLE", Timestamp(5000L))
-        val task3 = Task("task_3", "TITLE", Timestamp(222000L))
+        val task1 = Task("task_1", LocalDate.now(), LocalTime.now())
+        val task2 = Task("task_2", LocalDate.of(2000, 1, 1), LocalTime.now())
+        val task3 = Task("task_3", LocalDate.of(2001, 2, 1), LocalTime.now())
         repository.addTasks(task1, task2, task3)
         val viewModel = DelayedTasksViewModel(repository)
 
@@ -55,7 +55,7 @@ class DelayedTasksViewModelTest {
 
     @Test
     fun errorLoadingTasks_GeneratesTasksLoadingErrorEvent() = runBlocking {
-        repository.addTask(Task("task_2", "TITLE", Timestamp(5000L)))
+        repository.addTask(Task("task_2", LocalDate.of(2001, 2, 1), LocalTime.now()))
         repository.setError(true)
         val viewModel = DelayedTasksViewModel(repository)
 

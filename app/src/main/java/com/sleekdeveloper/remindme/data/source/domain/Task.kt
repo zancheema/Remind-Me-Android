@@ -1,12 +1,15 @@
 package com.sleekdeveloper.remindme.data.source.domain
 
-import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalTime
+import java.util.*
 
 data class Task(
-    val id: String,
-    val title: String,
-    val timestamp: Timestamp,
-    val daily: Boolean = false,
-    val completed: Boolean = false,
-    val important: Boolean = false
+        val title: String,
+        val date: LocalDate,
+        val time: LocalTime,
+        val id: String = UUID.randomUUID().toString(),
+        val repeatsDaily: Boolean = false,
+        val completed: Boolean = false,
+        val important: Boolean = false
 )

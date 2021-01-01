@@ -12,8 +12,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.lang.System.currentTimeMillis
-import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalTime
 
 @ExperimentalCoroutinesApi
 class TasksViewModelTest {
@@ -33,9 +33,9 @@ class TasksViewModelTest {
 
     @Test
     fun allTasks_ReturnsAllInsertedTasksAndSetsTasksLoadingErrorEventToFalse() = runBlocking {
-        val task1 = Task("task_1", "TITLE", Timestamp(2000L))
-        val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
-        val task3 = Task("task_3", "TITLE", Timestamp(3000L))
+        val task1 = Task("task_1", LocalDate.of(1999, 2, 2), LocalTime.now())
+        val task2 = Task("task_2", LocalDate.now(), LocalTime.now())
+        val task3 = Task("task_3", LocalDate.of(2011, 2, 3), LocalTime.now())
         repository.addTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
@@ -49,9 +49,9 @@ class TasksViewModelTest {
 
     @Test
     fun delayedTasks_ReturnTasksOfPreviousDates() = runBlocking {
-        val task1 = Task("task_1", "TITLE", Timestamp(2000L))
-        val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
-        val task3 = Task("task_3", "TITLE", Timestamp(3000L))
+        val task1 = Task("task_1", LocalDate.of(1999, 2, 2), LocalTime.now())
+        val task2 = Task("task_2", LocalDate.now(), LocalTime.now())
+        val task3 = Task("task_3", LocalDate.of(2011, 2, 3), LocalTime.now())
         repository.addTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
@@ -63,9 +63,9 @@ class TasksViewModelTest {
 
     @Test
     fun todayTasks_ReturnTasksOfToday() = runBlocking {
-        val task1 = Task("task_1", "TITLE", Timestamp(2000L))
-        val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
-        val task3 = Task("task_3", "TITLE", Timestamp(3000L))
+        val task1 = Task("task_1", LocalDate.of(1999, 2, 2), LocalTime.now())
+        val task2 = Task("task_2", LocalDate.now(), LocalTime.now())
+        val task3 = Task("task_3", LocalDate.of(2011, 2, 3), LocalTime.now())
         repository.addTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
@@ -76,10 +76,14 @@ class TasksViewModelTest {
 
     @Test
     fun upcomingTasks_ReturnTasksOfUpcomingDates() = runBlocking {
-        val oneDayInMillis = 86400000L
-        val task1 = Task("task_1", "TITLE", Timestamp(2000L))
-        val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
-        val task3 = Task("task_3", "TITLE", Timestamp(currentTimeMillis() + 2 * oneDayInMillis))
+        val currentDate = LocalDate.now()
+        val task1 = Task("task_1", LocalDate.of(1999, 2, 2), LocalTime.now())
+        val task2 = Task("task_2", LocalDate.now(), LocalTime.now())
+        val task3 = Task(
+            "task_3",
+            LocalDate.of(currentDate.year + 1, currentDate.month, currentDate.dayOfMonth),
+            LocalTime.now()
+        )
         repository.addTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 

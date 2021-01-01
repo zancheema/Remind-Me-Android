@@ -24,7 +24,7 @@ class TodayTasksViewModel(
                 when (tasks) {
                     is Success -> {
                         _tasksLoadingErrorEvent.value = Event(false)
-                        tasks.data.filter { it.timestamp.isToday() }
+                        tasks.data.filter { it.date.isToday() }
                     }
                     is Error -> {
                         _tasksLoadingErrorEvent.value = Event(true)

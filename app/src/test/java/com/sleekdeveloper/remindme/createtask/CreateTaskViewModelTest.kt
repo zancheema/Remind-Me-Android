@@ -1,0 +1,92 @@
+package com.sleekdeveloper.remindme.createtask
+
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.sleekdeveloper.remindme.MainCoroutineRule
+import com.sleekdeveloper.remindme.data.Result.Success
+import com.sleekdeveloper.remindme.data.source.FakeTestRepository
+import com.sleekdeveloper.remindme.getOrAwaitValue
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalTime
+
+@ExperimentalCoroutinesApi
+class CreateTaskViewModelTest {
+    private lateinit var viewModel: CreateTaskViewModel
+    private lateinit var repository: FakeTestRepository
+
+    @get:Rule
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @ExperimentalCoroutinesApi
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
+
+    @Before
+    fun initRepository() {
+        repository = FakeTestRepository()
+        viewModel = CreateTaskViewModel(repository)
+    }
+
+    @Test
+    fun createTaskWithoutTitle_GeneratesEmptyTitleEvent() {
+        viewModel.createTask()
+
+        val event = viewModel.emptyTitleEvent.getOrAwaitValue()
+        assertThat(event.getContentIfNotHandled(), `is`(true))
+    }
+
+    @Test
+    fun taskRepeatOptions_ReturnsOnceAndDaily() {
+        val options: List<String> = viewModel.taskRepeatOptionNames.getOrAwaitValue()
+
+        assertThat(options[0], `is`("Once"))
+        assertThat(options[1], `is`("Daily"))
+    }
+
+    @Test
+    fun createTaskWithoutDate_GeneratesEmptyDateEvent() {
+        viewModel.title.value = "TITLE"
+        // no date selected
+        viewModel.createTask()
+
+        val event = viewModel.emptyDateEvent.getOrAwaitValue()
+        assertThat(event.getContentIfNotHandled(), `is`(true))
+    }
+
+    @Test
+    fun createTaskWithoutTime_GeneratesEmptyTimeEvent() {
+        viewModel.title.value = "TITLE"
+        viewModel.setDate(LocalDate.now())
+        // no time selected
+        viewModel.createTask()
+
+        val event = viewModel.emptyTimeEvent.getOrAwaitValue()
+        assertThat(event.getContentIfNotHandled(), `is`(true))
+    }
+
+    @Test
+    fun createTaskWithValidFields_CreatesTaskWithSelectedFields() {
+        val title = "TITLE"
+        val date = LocalDate.of(2000, 4, 8)
+        val time = LocalTime.of(18, 55)
+
+        viewModel.title.value = title
+        viewModel.selectedOptionIndex.value = 1
+        viewModel.setDate(date)
+        viewModel.setTime(time)
+        viewModel.createTask()
+
+        val tasks = (repository.observeAllTasks().getOrAwaitValue() as Success).data
+        assertThat(tasks.size, `is`(1))
+        val createdTask = tasks[0]
+        assertThat(createdTask.title, `is`(title))
+        assertThat(createdTask.repeatsDaily, `is`(true))
+        assertThat(createdTask.date, `is`(date))
+        assertThat(createdTask.time, `is`(time))
+    }
+}

@@ -24,7 +24,7 @@ class DelayedTasksViewModel(
                 when (tasks) {
                     is Success -> {
                         _tasksLoadingErrorEvent.value = Event(false)
-                        tasks.data.filter { it.timestamp.isDelayed() }
+                        tasks.data.filter { it.date.isDelayed() }
                     }
                     is Error -> {
                         _tasksLoadingErrorEvent.value = Event(true)

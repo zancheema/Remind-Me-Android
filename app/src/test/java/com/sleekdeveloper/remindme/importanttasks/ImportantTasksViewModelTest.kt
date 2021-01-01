@@ -12,8 +12,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.lang.System.currentTimeMillis
-import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalTime
 
 class ImportantTasksViewModelTest {
     private lateinit var repository: FakeTestRepository
@@ -32,15 +32,15 @@ class ImportantTasksViewModelTest {
 
     @Test
     fun tasks_LoadImportantTasks() = runBlocking {
-        val task1 = Task("task_1", "TITLE", Timestamp(currentTimeMillis()), important = true)
-        val task2 = Task("task_2", "TITLE", Timestamp(currentTimeMillis()))
-        val task3 = Task("task_3", "TITLE", Timestamp(currentTimeMillis()), important = true)
+        val task1 = Task("task_1", LocalDate.now(), LocalTime.now(), important = true)
+        val task2 = Task("task_2", LocalDate.now(), LocalTime.now())
+        val task3 = Task("task_3", LocalDate.now(), LocalTime.now(), important = true)
         repository.addTasks(task1, task2, task3)
         val viewModel = ImportantTasksViewModel(repository)
 
         val tasks = viewModel.tasks.getOrAwaitValue()
 
-        assertThat(tasks, `is`(listOf(task1, 3)))
+        assertThat(tasks, `is`(listOf(task1, task3)))
     }
 
     @Test

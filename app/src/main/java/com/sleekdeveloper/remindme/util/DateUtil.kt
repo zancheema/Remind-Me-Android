@@ -1,23 +1,18 @@
 package com.sleekdeveloper.remindme.util
 
-import java.util.*
+import java.time.LocalDate
 
-fun Date.isDelayed(): Boolean = compareToToday() < 0
+fun LocalDate.isDelayed(): Boolean = compareToToday() < 0
 
-fun Date.isToday(): Boolean = compareToToday() == 0
+fun LocalDate.isToday(): Boolean = compareToToday() == 0
 
-fun Date.isUpcoming(): Boolean = compareToToday() > 0
+fun LocalDate.isUpcoming(): Boolean = compareToToday() > 0
 
-private fun Date.compareToToday(): Int = compareDays(Date(System.currentTimeMillis()))
+private fun LocalDate.compareToToday(): Int = compareDays(LocalDate.now())
 
-private fun Date.compareDays(other: Date): Int {
-    val calendar = Calendar.getInstance()
-    calendar.time = this
-    val otherCalendar = Calendar.getInstance()
-    otherCalendar.time = other
-
-    val days = calendar.get(Calendar.YEAR) * 366 + calendar.get(Calendar.DAY_OF_YEAR)
-    val otherDays = otherCalendar.get(Calendar.YEAR) * 366 + otherCalendar.get(Calendar.DAY_OF_YEAR)
+private fun LocalDate.compareDays(other: LocalDate): Int {
+    val days = year * 366 + this.dayOfYear
+    val otherDays = other.year * 366 + other.dayOfYear
 
     return days.compareTo(otherDays)
 }

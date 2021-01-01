@@ -4,14 +4,12 @@ import org.hamcrest.CoreMatchers.`is`
 import org.junit.Test
 
 import org.junit.Assert.*
-import java.lang.System.currentTimeMillis
-import java.util.*
+import java.time.LocalDate
 
 class DateUtilKtTest {
-    private val oneDayInMillis = 86400000L
-    private val yesterday = Date(currentTimeMillis() - oneDayInMillis)
-    private val today = Date(currentTimeMillis())
-    private val tomorrow = Date(currentTimeMillis() + oneDayInMillis)
+    private val today = LocalDate.now()
+    private val yesterday = LocalDate.of(1999, 2, 3)
+    private val tomorrow = LocalDate.of(5000, 4, 2)
 
     @Test
     fun isDelayed_verifiesTheDateHasPassed() {

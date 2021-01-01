@@ -36,17 +36,17 @@ class TasksViewModel(
 
     val delayedTasks: LiveData<List<Task>> =
             allTasks.map { tasks ->
-                tasks.filter { it.timestamp.isDelayed() }
+                tasks.filter { it.date.isDelayed() }
             }
 
     val todayTasks: LiveData<List<Task>> =
             allTasks.map { tasks ->
-                tasks.filter { it.timestamp.isToday() }
+                tasks.filter { it.date.isToday() }
             }
 
     val upcomingTasks: LiveData<List<Task>> =
             allTasks.map { tasks ->
-                tasks.filter { it.timestamp.isUpcoming() }
+                tasks.filter { it.date.isUpcoming() }
             }
 
     val noTasksEvent: LiveData<Event<Boolean>> =
