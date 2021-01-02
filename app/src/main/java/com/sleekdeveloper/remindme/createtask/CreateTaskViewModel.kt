@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.sleekdeveloper.remindme.Event
 import com.sleekdeveloper.remindme.data.source.AppRepository
 import com.sleekdeveloper.remindme.data.source.domain.Task
-import com.sleekdeveloper.remindme.util.TaskRepeatOption.Companion.getAllTaskRepeatOptions
+import com.sleekdeveloper.remindme.util.getAllTaskRepeatOptions
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -50,7 +50,7 @@ class CreateTaskViewModel(
             taskTitle as String,
             taskDate as LocalDate,
             taskTime,
-            repeatsDaily = repeatsDaily
+            repeat = repeatsDaily
         )
 
         viewModelScope.launch {
@@ -59,7 +59,7 @@ class CreateTaskViewModel(
     }
 
     private fun taskRepeatsDaily() =
-        taskRepeatOptions.value!![selectedOptionIndex.value!!].repeatsDaily
+        taskRepeatOptions.value!![selectedOptionIndex.value!!]
 
     private fun verifyTaskFields(
         taskTitle: String?,

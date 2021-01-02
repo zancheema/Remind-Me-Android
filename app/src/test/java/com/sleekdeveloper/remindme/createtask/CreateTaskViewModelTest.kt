@@ -5,6 +5,7 @@ import com.sleekdeveloper.remindme.MainCoroutineRule
 import com.sleekdeveloper.remindme.data.Result.Success
 import com.sleekdeveloper.remindme.data.source.FakeTestRepository
 import com.sleekdeveloper.remindme.getOrAwaitValue
+import com.sleekdeveloper.remindme.util.TaskRepeatOption
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -74,7 +75,7 @@ class CreateTaskViewModelTest {
         assertThat(tasks.size, `is`(1))
         val createdTask = tasks[0]
         assertThat(createdTask.title, `is`(title))
-        assertThat(createdTask.repeatsDaily, `is`(true))
+        assertThat(createdTask.repeat, `is`(TaskRepeatOption.Daily))
         assertThat(createdTask.date, `is`(date))
         assertThat(createdTask.time, `is`(time))
     }
