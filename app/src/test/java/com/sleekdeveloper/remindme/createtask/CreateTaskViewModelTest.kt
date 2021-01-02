@@ -59,17 +59,6 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun createTaskWithoutTime_GeneratesEmptyTimeEvent() {
-        viewModel.title.value = "TITLE"
-        viewModel.setDate(LocalDate.now())
-        // no time selected
-        viewModel.createTask()
-
-        val event = viewModel.emptyTimeEvent.getOrAwaitValue()
-        assertThat(event.getContentIfNotHandled(), `is`(true))
-    }
-
-    @Test
     fun createTaskWithValidFields_CreatesTaskWithSelectedFields() {
         val title = "TITLE"
         val date = LocalDate.of(2000, 4, 8)
