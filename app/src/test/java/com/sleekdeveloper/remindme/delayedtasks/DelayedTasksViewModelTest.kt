@@ -28,7 +28,7 @@ class DelayedTasksViewModelTest {
 
     @Before
     fun initRepository() {
-        repository = FakeTestRepository()
+        repository = FakeTestRepository
     }
 
     @Test

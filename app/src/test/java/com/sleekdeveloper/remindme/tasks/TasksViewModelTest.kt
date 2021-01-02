@@ -28,7 +28,7 @@ class TasksViewModelTest {
 
     @Before
     fun initRepository() = runBlocking {
-        repository = FakeTestRepository()
+        repository = FakeTestRepository
     }
 
     @Test
