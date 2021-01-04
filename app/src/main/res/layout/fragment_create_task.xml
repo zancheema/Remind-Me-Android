@@ -1,48 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".createtask.CreateTaskFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/editTaskTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:hint="@string/title"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <Spinner
-        android:id="@+id/taskRepeatSpinner"
+        <variable
+            name="viewmodel"
+            type="com.sleekdeveloper.remindme.createtask.CreateTaskViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTaskTitle"
-        tools:listitem="@android:layout/simple_spinner_item" />
+        android:layout_height="match_parent"
+        tools:context=".createtask.CreateTaskFragment">
 
-    <Button
-        android:id="@+id/scheduleTaskBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/schedule"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/editTaskTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:ems="10"
+            android:hint="@string/title"
+            android:inputType="textPersonName"
+            android:text="@={viewmodel.title}"
+            app:layout_constraintEnd_toStartOf="@+id/saveTaskButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/setTaskDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
+            android:drawablePadding="@dimen/task_date_drawable_padding"
+            android:onClick="@{() -> viewmodel.pickDate()}"
+            android:text="@string/schedule_due_date"
+            app:layout_constraintEnd_toStartOf="@+id/setTaskTime"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTaskTitle" />
+
+        <TextView
+            android:id="@+id/setTaskTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_access_time_24"
+            android:drawablePadding="@dimen/task_time_drawable_padding"
+            android:onClick="@{() -> viewmodel.pickTime()}"
+            android:text="@string/set_time"
+            app:layout_constraintBottom_toBottomOf="@+id/setTaskDate"
+            app:layout_constraintEnd_toStartOf="@+id/setTaskRepeat"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/setTaskDate" />
+
+        <Spinner
+            android:id="@+id/setTaskRepeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_cached_24"
+            android:drawablePadding="@dimen/task_time_drawable_padding"
+            app:layout_constraintBottom_toBottomOf="@+id/setTaskTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/setTaskTime"
+            tools:listitem="@layout/task_repeat_spinner"
+            tools:text="@string/task_daily" />
+
+        <ImageButton
+            android:id="@+id/saveTaskButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewmodel.createTask()}"
+            android:src="@drawable/ic_baseline_arrow_upward_24"
+            app:layout_constraintBottom_toBottomOf="@+id/editTaskTitle"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -11,4 +11,8 @@
     <string name="upcoming">Upcoming</string>
     <string name="title">Title</string>
     <string name="schedule">Schedule</string>
+    <string name="schedule_due_date">Schedule Due Date</string>
+    <string name="set_time">Set Time</string>
+    <string name="empty_title_event">The title is Empty</string>
+    <string name="empty_date_event">No Date Scheduled</string>
 </resources>

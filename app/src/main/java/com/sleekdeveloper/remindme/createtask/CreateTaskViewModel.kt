@@ -8,10 +8,23 @@ import com.sleekdeveloper.remindme.util.getAllTaskRepeatOptions
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
+import com.sleekdeveloper.remindme.R
 
 class CreateTaskViewModel(
     private val repository: AppRepository
 ) : ViewModel() {
+
+    private val _snackbarText = MutableLiveData<Event<Int>>()
+    val snackbarText: LiveData<Event<Int>>
+        get() = _snackbarText
+
+    private val _pickTimeEvent = MutableLiveData<Event<Boolean>>()
+    val pickTimeEvent: LiveData<Event<Boolean>>
+        get() = _pickTimeEvent
+
+    private val _pickDateEvent = MutableLiveData<Event<Boolean>>()
+    val pickDateEvent: LiveData<Event<Boolean>>
+        get() = _pickDateEvent
 
     private val time = MutableLiveData<LocalTime>()
 
@@ -28,14 +41,6 @@ class CreateTaskViewModel(
         }
 
     val title = MutableLiveData<String>()
-
-    private val _emptyTitleEvent = MutableLiveData<Event<Boolean>>()
-    val emptyTitleEvent: LiveData<Event<Boolean>>
-        get() = _emptyTitleEvent
-
-    private val _emptyDateEvent = MutableLiveData<Event<Boolean>>()
-    val emptyDateEvent: LiveData<Event<Boolean>>
-        get() = _emptyDateEvent
 
     fun createTask() {
         val taskTitle = title.value
@@ -68,20 +73,32 @@ class CreateTaskViewModel(
             !verifyDate(taskDate)
 
     private fun verifyDate(date: LocalDate?) =
-        (date != null).also { if (!it) generateEmptyDateEvent() }
+        (date != null).also { if (!it) showSnackbarText(SnackBarMessage.EMPTY_DATE) }
 
     private fun verifyTitle(title: String?) =
         (title != null && title.isNotEmpty())
             .also { valid ->
-                if (!valid) generateEmptyTitleEvent()
+                if (!valid) showSnackbarText(SnackBarMessage.EMPTY_TITLE)
             }
 
-    private fun generateEmptyTitleEvent() {
-        _emptyTitleEvent.value = Event(true)
+    private fun showSnackbarText(msg: SnackBarMessage) {
+        val resId = when (msg) {
+            SnackBarMessage.EMPTY_TITLE -> R.string.empty_title_event
+            SnackBarMessage.EMPTY_DATE  -> R.string.empty_date_event
+        }
+        showSnackbarText(resId)
     }
 
-    private fun generateEmptyDateEvent() {
-        _emptyDateEvent.value = Event(true)
+    private fun showSnackbarText(resId: Int) {
+        _snackbarText.value = Event(resId)
+    }
+
+    fun pickDate() {
+        _pickDateEvent.value = Event(true)
+    }
+
+    fun pickTime() {
+        _pickTimeEvent.value = Event(true)
     }
 
     fun setDate(date: LocalDate) {
@@ -91,4 +108,9 @@ class CreateTaskViewModel(
     fun setTime(time: LocalTime) {
         this.time.value = time
     }
+}
+
+private enum class SnackBarMessage {
+    EMPTY_TITLE,
+    EMPTY_DATE
 }

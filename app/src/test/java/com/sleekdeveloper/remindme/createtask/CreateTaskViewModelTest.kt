@@ -2,6 +2,7 @@ package com.sleekdeveloper.remindme.createtask
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sleekdeveloper.remindme.MainCoroutineRule
+import com.sleekdeveloper.remindme.R
 import com.sleekdeveloper.remindme.data.Result.Success
 import com.sleekdeveloper.remindme.data.source.FakeTestRepository
 import com.sleekdeveloper.remindme.getOrAwaitValue
@@ -34,11 +35,21 @@ class CreateTaskViewModelTest {
     }
 
     @Test
-    fun createTaskWithoutTitle_GeneratesEmptyTitleEvent() {
+    fun createTaskWithoutTitle_SetsUpSnackbarTextToEmptyTitle() {
         viewModel.createTask()
 
-        val event = viewModel.emptyTitleEvent.getOrAwaitValue()
-        assertThat(event.getContentIfNotHandled(), `is`(true))
+        val event = viewModel.snackbarText.getOrAwaitValue()
+        assertThat(event.getContentIfNotHandled(), `is`(R.string.empty_title_event))
+    }
+
+    @Test
+    fun createTaskWithoutDate_SetsUpSnackbarTextToEmptyDate() {
+        viewModel.title.value = "TITLE"
+        // no date selected
+        viewModel.createTask()
+
+        val event = viewModel.snackbarText.getOrAwaitValue()
+        assertThat(event.getContentIfNotHandled(), `is`(R.string.empty_date_event))
     }
 
     @Test
@@ -47,16 +58,6 @@ class CreateTaskViewModelTest {
 
         assertThat(options[0], `is`("Once"))
         assertThat(options[1], `is`("Daily"))
-    }
-
-    @Test
-    fun createTaskWithoutDate_GeneratesEmptyDateEvent() {
-        viewModel.title.value = "TITLE"
-        // no date selected
-        viewModel.createTask()
-
-        val event = viewModel.emptyDateEvent.getOrAwaitValue()
-        assertThat(event.getContentIfNotHandled(), `is`(true))
     }
 
     @Test
