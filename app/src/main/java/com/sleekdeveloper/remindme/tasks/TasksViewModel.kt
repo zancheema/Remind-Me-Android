@@ -1,5 +1,6 @@
 package com.sleekdeveloper.remindme.tasks
 
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +15,8 @@ import com.sleekdeveloper.remindme.util.isDelayed
 import com.sleekdeveloper.remindme.util.isToday
 import com.sleekdeveloper.remindme.util.isUpcoming
 
+private const val TAG = "TasksViewModel"
+
 class TasksViewModel(
         repository: AppRepository
 ) : ViewModel() {
@@ -23,10 +26,12 @@ class TasksViewModel(
             repository.observeAllTasks().map { result ->
                 when (result) {
                     is Success -> {
+                        Log.d(TAG, "success: ${result.data}")
                         setTasksLoadingEvent(false)
                         result.data
                     }
                     is Error -> {
+                        Log.d(TAG, "error: ${result.exception}")
                         setTasksLoadingEvent(true)
                         emptyList()
                     }
