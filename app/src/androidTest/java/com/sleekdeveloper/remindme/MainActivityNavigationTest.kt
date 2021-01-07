@@ -15,7 +15,7 @@ import org.junit.runner.RunWith
 
 @MediumTest
 @RunWith(AndroidJUnit4::class)
-class ManActivityNavigationTest {
+class MainActivityNavigationTest {
     @get:Rule
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
