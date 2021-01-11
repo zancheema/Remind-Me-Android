@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="task"
             type="com.sleekdeveloper.remindme.data.source.domain.Task" />
@@ -30,11 +31,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:drawableLeft="@drawable/ic_baseline_cached_24"
                 android:drawablePadding="@dimen/task_time_drawable_padding"
-                android:text="@string/task_daily"
+                android:text="@{task.repeat.name}"
+                app:drawableLeftCompat="@drawable/ic_baseline_cached_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/taskDate" />
+                app:layout_constraintStart_toEndOf="@+id/taskDate"
+                tools:text="@string/task_daily" />
 
             <CheckBox
                 android:id="@+id/taskTitle"
@@ -42,9 +44,9 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@{task.title}"
-                tools:text="@string/task_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/task_title" />
 
             <ImageView
                 android:id="@+id/favoriteTask"
@@ -61,10 +63,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:drawablePadding="@dimen/task_time_drawable_padding"
-                android:text="@string/task_time"
+                android:text="@{task.time.toString()}"
                 app:drawableLeftCompat="@drawable/ic_baseline_access_time_24"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/taskTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/taskTitle"
+                tools:text="@string/task_time" />
 
             <TextView
                 android:id="@+id/taskDate"
@@ -73,10 +76,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:drawablePadding="@dimen/task_date_drawable_padding"
-                android:text="@string/task_date"
+                android:text="@{task.date.toString()}"
                 app:drawableLeftCompat="@drawable/ic_baseline_calendar_today_24"
                 app:layout_constraintBaseline_toBaselineOf="@+id/taskTime"
-                app:layout_constraintStart_toEndOf="@+id/taskTime" />
+                app:layout_constraintStart_toEndOf="@+id/taskTime"
+                tools:text="@string/task_date" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

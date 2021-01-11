@@ -10,10 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.sleekdeveloper.remindme.EventObserver
 import com.sleekdeveloper.remindme.data.source.StubRepository
 import com.sleekdeveloper.remindme.databinding.FragmentCreateTaskBinding
 import com.sleekdeveloper.remindme.util.setUpSnackar
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.*
 
 class CreateTaskFragment : Fragment() {
@@ -36,6 +40,13 @@ class CreateTaskFragment : Fragment() {
         setUpDatePicker()
         setUpTimePicker()
         setUpSnackbar()
+        setUpNavigation()
+    }
+
+    private fun setUpNavigation() {
+        viewModel.taskAddedEvent.observe(viewLifecycleOwner, EventObserver { added ->
+            if (added) findNavController().popBackStack()
+        })
     }
 
     private fun setUpSnackbar() {
@@ -53,7 +64,7 @@ class CreateTaskFragment : Fragment() {
         TimePickerDialog(
             requireContext(),
             { _: TimePicker, hour: Int, minute: Int ->
-
+                viewModel.setTime(LocalTime.of(hour, minute))
             },
             cal.get(Calendar.HOUR_OF_DAY),
             cal.get(Calendar.MINUTE),
@@ -72,7 +83,7 @@ class CreateTaskFragment : Fragment() {
         DatePickerDialog(
             requireContext(),
             { _: DatePicker, year: Int, month: Int, day: Int ->
-
+                viewModel.setDate(LocalDate.of(year, month + 1, day))
             },
             cal.get(Calendar.YEAR),
             cal.get(Calendar.MONTH),

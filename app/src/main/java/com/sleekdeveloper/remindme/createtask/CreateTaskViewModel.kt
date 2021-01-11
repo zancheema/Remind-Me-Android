@@ -14,6 +14,10 @@ class CreateTaskViewModel(
     private val repository: AppRepository
 ) : ViewModel() {
 
+    private val _taskAddedEvent = MutableLiveData<Event<Boolean>>()
+    val taskAddedEvent: LiveData<Event<Boolean>>
+        get() = _taskAddedEvent
+
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>>
         get() = _snackbarText
@@ -57,9 +61,13 @@ class CreateTaskViewModel(
             taskTime,
             repeat = repeatsDaily
         )
+        addTask(task)
+    }
 
+    private fun addTask(task: Task) {
         viewModelScope.launch {
             repository.addTask(task)
+            _taskAddedEvent.value = Event(true)
         }
     }
 
