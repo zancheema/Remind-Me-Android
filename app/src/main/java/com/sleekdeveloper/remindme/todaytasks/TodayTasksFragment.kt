@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sleekdeveloper.remindme.data.source.StubRepository
+import androidx.fragment.app.viewModels
 import com.sleekdeveloper.remindme.databinding.FragmentTodayTasksBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TodayTasksFragment : Fragment() {
+
+    private val viewModel by viewModels<TodayTasksViewModel>()
+
     private lateinit var viewDataBinding: FragmentTodayTasksBinding
-    private val viewModel = TodayTasksViewModel(StubRepository)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

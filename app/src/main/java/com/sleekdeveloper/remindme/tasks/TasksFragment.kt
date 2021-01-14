@@ -5,14 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sleekdeveloper.remindme.EventObserver
-import com.sleekdeveloper.remindme.data.source.StubRepository
 import com.sleekdeveloper.remindme.databinding.FragmentTasksBinding
 import com.sleekdeveloper.remindme.tasks.TasksFragmentDirections.Companion.actionTasksFragmentToCreateTaskFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TasksFragment : Fragment() {
-    private val viewModel = TasksViewModel(StubRepository)
+    private val viewModel by viewModels<TasksViewModel>()
     private lateinit var viewDataBinding: FragmentTasksBinding
 
     override fun onCreateView(

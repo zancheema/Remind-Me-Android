@@ -1,5 +1,6 @@
 package com.sleekdeveloper.remindme.createtask
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.sleekdeveloper.remindme.Event
 import com.sleekdeveloper.remindme.data.source.AppRepository
@@ -10,7 +11,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import com.sleekdeveloper.remindme.R
 
-class CreateTaskViewModel(
+class CreateTaskViewModel @ViewModelInject constructor(
     private val repository: AppRepository
 ) : ViewModel() {
 
@@ -92,7 +93,7 @@ class CreateTaskViewModel(
     private fun showSnackbarText(msg: SnackBarMessage) {
         val resId = when (msg) {
             SnackBarMessage.EMPTY_TITLE -> R.string.empty_title_event
-            SnackBarMessage.EMPTY_DATE  -> R.string.empty_date_event
+            SnackBarMessage.EMPTY_DATE -> R.string.empty_date_event
         }
         showSnackbarText(resId)
     }

@@ -1,7 +1,6 @@
 package com.sleekdeveloper.remindme.tasks
 
 import android.os.Bundle
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -9,22 +8,35 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.sleekdeveloper.remindme.R
 import com.sleekdeveloper.remindme.data.source.AppRepository
-import com.sleekdeveloper.remindme.data.source.StubRepository
 import com.sleekdeveloper.remindme.data.source.domain.Task
+import com.sleekdeveloper.remindme.di.AppRepositoryModule
+import com.sleekdeveloper.remindme.launchFragmentInHiltContainer
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.LocalDate
+import javax.inject.Inject
 
 @MediumTest
 @RunWith(AndroidJUnit4::class)
 @ExperimentalCoroutinesApi
+@UninstallModules(AppRepositoryModule::class)
+@HiltAndroidTest
 class TasksFragmentTest {
-    private lateinit var repository: AppRepository
+
+    @get:Rule
+    val hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var repository: AppRepository
 
     private val delayedTask1 = Task("dt_1", LocalDate.of(2005, 2, 3))
     private val delayedTask2 = Task("dt_2", LocalDate.of(2015, 3, 3))
@@ -33,8 +45,8 @@ class TasksFragmentTest {
     private val upcomingTask2 = Task("up_2", LocalDate.of(2078, 5, 4))
 
     @Before
-    fun launchFragmentWithTasks() {
-        repository = StubRepository
+    fun initWithFragment() {
+        hiltRule.inject()
         runBlocking {
             repository.addTasks(
                 delayedTask1,
@@ -44,7 +56,7 @@ class TasksFragmentTest {
                 upcomingTask2
             )
         }
-        launchFragmentInContainer<TasksFragment>(Bundle(), R.style.Theme_RemindMe)
+        launchFragmentInHiltContainer<TasksFragment>(Bundle(), R.style.Theme_RemindMe)
     }
 
     @Test

@@ -27,7 +27,7 @@ class UpcomingTasksViewModelTest {
 
     @Before
     fun initRepository() = runBlocking {
-        repository = FakeTestRepository
+        repository = FakeTestRepository()
     }
 
     @Test

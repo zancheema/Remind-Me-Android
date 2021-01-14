@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sleekdeveloper.remindme.data.source.StubRepository
+import androidx.fragment.app.viewModels
 import com.sleekdeveloper.remindme.databinding.FragmentDelayedTasksBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DelayedTasksFragment : Fragment() {
-    private val viewModel = DelayedTasksViewModel(StubRepository)
+
+    private val viewModel by viewModels<DelayedTasksViewModel>()
+
     private lateinit var viewDataBinding: FragmentDelayedTasksBinding
 
     override fun onCreateView(

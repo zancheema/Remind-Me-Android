@@ -1,5 +1,6 @@
 package com.sleekdeveloper.remindme.upcomingtasks
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +12,7 @@ import com.sleekdeveloper.remindme.data.source.AppRepository
 import com.sleekdeveloper.remindme.data.source.domain.Task
 import com.sleekdeveloper.remindme.util.isUpcoming
 
-class UpcomingTasksViewModel(
+class UpcomingTasksViewModel @ViewModelInject constructor(
         repository: AppRepository
 ) : ViewModel() {
 

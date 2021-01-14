@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.TimePicker
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
@@ -13,16 +12,34 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.sleekdeveloper.remindme.R
+import com.sleekdeveloper.remindme.di.AppRepositoryModule
+import com.sleekdeveloper.remindme.launchFragmentInHiltContainer
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import org.hamcrest.CoreMatchers.instanceOf
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
+@UninstallModules(AppRepositoryModule::class)
+@HiltAndroidTest
 class CreateTaskFragmentTest {
+
+    @get:Rule
+    val hiltRule = HiltAndroidRule(this)
+
+    @Before
+    fun init() {
+        hiltRule.inject()
+    }
+
     @Test
     fun clickSetTaskDate_ShowsDatePicker() {
-        launchFragmentInContainer<CreateTaskFragment>(Bundle(), R.style.Theme_RemindMe)
+        launchFragmentInHiltContainer<CreateTaskFragment>(Bundle(), R.style.Theme_RemindMe)
 
         onView(withId(R.id.setTaskDate))
             .check(matches(isDisplayed()))
@@ -33,7 +50,7 @@ class CreateTaskFragmentTest {
 
     @Test
     fun clickSetTaskTime_ShowsTimePicker() {
-        launchFragmentInContainer<CreateTaskFragment>(Bundle(), R.style.Theme_RemindMe)
+        launchFragmentInHiltContainer<CreateTaskFragment>(Bundle(), R.style.Theme_RemindMe)
 
         onView(withId(R.id.setTaskTime))
             .check(matches(isDisplayed()))
@@ -44,7 +61,7 @@ class CreateTaskFragmentTest {
 
     @Test
     fun saveTaskWithEmptyTitle_DisplaysEmptyTitleMessage() {
-        launchFragmentInContainer<CreateTaskFragment>(Bundle(), R.style.Theme_RemindMe)
+        launchFragmentInHiltContainer<CreateTaskFragment>(Bundle(), R.style.Theme_RemindMe)
         val context = getApplicationContext<Context>()
 
         onView(withId(R.id.saveTaskButton))
@@ -56,7 +73,7 @@ class CreateTaskFragmentTest {
 
     @Test
     fun saveTaskWithEmptyDate_DisplaysEmptyDateMessage() {
-        launchFragmentInContainer<CreateTaskFragment>(Bundle(), R.style.Theme_RemindMe)
+        launchFragmentInHiltContainer<CreateTaskFragment>(Bundle(), R.style.Theme_RemindMe)
         val context = getApplicationContext<Context>()
 
         onView(withId(R.id.editTaskTitle))

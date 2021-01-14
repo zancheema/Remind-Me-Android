@@ -10,18 +10,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.sleekdeveloper.remindme.EventObserver
-import com.sleekdeveloper.remindme.data.source.StubRepository
 import com.sleekdeveloper.remindme.databinding.FragmentCreateTaskBinding
 import com.sleekdeveloper.remindme.util.setUpSnackar
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
 
+@AndroidEntryPoint
 class CreateTaskFragment : Fragment() {
-    private val viewModel = CreateTaskViewModel(StubRepository)
+
+    private val viewModel by viewModels<CreateTaskViewModel>()
+
     private lateinit var viewDataBinding: FragmentCreateTaskBinding
 
     override fun onCreateView(

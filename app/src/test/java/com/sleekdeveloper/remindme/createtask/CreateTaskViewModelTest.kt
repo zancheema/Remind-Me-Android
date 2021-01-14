@@ -30,7 +30,7 @@ class CreateTaskViewModelTest {
 
     @Before
     fun initRepository() {
-        repository = FakeTestRepository
+        repository = FakeTestRepository()
         viewModel = CreateTaskViewModel(repository)
     }
 
