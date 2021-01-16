@@ -24,7 +24,7 @@ class ImportantTasksViewModel @ViewModelInject constructor(
             when (tasks) {
                 is Success -> {
                     _tasksLoadingErrorEvent.value = Event(false)
-                    tasks.data.filter { it.important }
+                    tasks.data.filter { it.isImportant }
                 }
                 is Error -> {
                     _tasksLoadingErrorEvent.value = Event(true)

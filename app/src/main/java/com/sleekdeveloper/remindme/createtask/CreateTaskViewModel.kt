@@ -67,7 +67,7 @@ class CreateTaskViewModel @ViewModelInject constructor(
 
     private fun addTask(task: Task) {
         viewModelScope.launch {
-            repository.addTask(task)
+            repository.saveTask(task)
             _taskAddedEvent.value = Event(true)
         }
     }

@@ -36,7 +36,7 @@ class DelayedTasksViewModelTest {
         val task1 = Task("task_1", LocalDate.now(), LocalTime.now())
         val task2 = Task("task_2", LocalDate.of(2000, 1, 1), LocalTime.now())
         val task3 = Task("task_3", LocalDate.of(2001, 2, 1), LocalTime.now())
-        repository.addTasks(task1, task2, task3)
+        repository.saveTasks(task1, task2, task3)
         val viewModel = DelayedTasksViewModel(repository)
 
         val tasks = viewModel.tasks.getOrAwaitValue()
@@ -55,7 +55,7 @@ class DelayedTasksViewModelTest {
 
     @Test
     fun errorLoadingTasks_GeneratesTasksLoadingErrorEvent() = runBlocking {
-        repository.addTask(Task("task_2", LocalDate.of(2001, 2, 1), LocalTime.now()))
+        repository.saveTask(Task("task_2", LocalDate.of(2001, 2, 1), LocalTime.now()))
         repository.setError(true)
         val viewModel = DelayedTasksViewModel(repository)
 

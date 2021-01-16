@@ -44,10 +44,10 @@ class ImportantTasksFragmentTest {
 
     @Test
     fun tasksListDisplaysImportantTasks() {
-        val task1 = Task("TITLE_1", LocalDate.now(), important = true)
-        val task2 = Task("TITLE_2", LocalDate.now(), important = true)
+        val task1 = Task("TITLE_1", LocalDate.now(), isImportant = true)
+        val task2 = Task("TITLE_2", LocalDate.now(), isImportant = true)
         val task3 = Task("TITLE_3", LocalDate.now())
-        runBlocking { repository.addTasks(task1, task2, task3) }
+        runBlocking { repository.saveTasks(task1, task2, task3) }
 
         launchFragmentInHiltContainer<ImportantTasksFragment>(Bundle(), R.style.Theme_RemindMe)
 

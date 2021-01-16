@@ -48,7 +48,7 @@ class TasksFragmentTest {
     fun initWithFragment() {
         hiltRule.inject()
         runBlocking {
-            repository.addTasks(
+            repository.saveTasks(
                 delayedTask1,
                 delayedTask2,
                 todayTask,

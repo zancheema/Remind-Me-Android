@@ -48,7 +48,7 @@ class TodayTasksFragmentTest {
         val task2 = Task("TITLE_2", LocalDate.now())
         val task3 = Task("TITLE_3", LocalDate.of(2010, 2, 19))
         runBlocking {
-            repository.addTasks(task1, task2, task3)
+            repository.saveTasks(task1, task2, task3)
         }
         launchFragmentInHiltContainer<TodayTasksFragment>(Bundle(), R.style.Theme_RemindMe)
 
@@ -61,15 +61,4 @@ class TodayTasksFragmentTest {
         onView(withId(R.id.tasksList))
             .check(matches(not(hasDescendant(withText(task3.title)))))
     }
-
-//    @Module
-//    @InstallIn(ApplicationComponent::class)
-//    object TestRepositoryModule {
-//
-//        @Singleton
-//        @Provides
-//        fun provideTestRepository(): AppRepository {
-//            return FakeTestRepository()
-//        }
-//    }
 }

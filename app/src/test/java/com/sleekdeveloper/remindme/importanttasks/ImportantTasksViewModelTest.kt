@@ -32,10 +32,10 @@ class ImportantTasksViewModelTest {
 
     @Test
     fun tasks_LoadImportantTasks() = runBlocking {
-        val task1 = Task("task_1", LocalDate.now(), LocalTime.now(), important = true)
+        val task1 = Task("task_1", LocalDate.now(), LocalTime.now(), isImportant = true)
         val task2 = Task("task_2", LocalDate.now(), LocalTime.now())
-        val task3 = Task("task_3", LocalDate.now(), LocalTime.now(), important = true)
-        repository.addTasks(task1, task2, task3)
+        val task3 = Task("task_3", LocalDate.now(), LocalTime.now(), isImportant = true)
+        repository.saveTasks(task1, task2, task3)
         val viewModel = ImportantTasksViewModel(repository)
 
         val tasks = viewModel.tasks.getOrAwaitValue()

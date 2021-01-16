@@ -7,11 +7,11 @@ import java.time.LocalTime
 import java.util.UUID.randomUUID
 
 data class Task(
-        val title: String,
-        val date: LocalDate,
-        val time: LocalTime? = null,
-        val id: String = randomUUID().toString(),
-        val repeat: TaskRepeatOption = Once,
-        val completed: Boolean = false,
-        val important: Boolean = false
+    val title: String,
+    val date: LocalDate,
+    val time: LocalTime? = null,
+    val id: String = randomUUID().toString(),
+    val repeat: TaskRepeatOption = Once,
+    var isCompleted: Boolean = false,
+    val isImportant: Boolean = false
 )

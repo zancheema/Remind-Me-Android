@@ -1,7 +1,7 @@
 package com.sleekdeveloper.remindme.di
 
 import com.sleekdeveloper.remindme.data.source.AppRepository
-import com.sleekdeveloper.remindme.data.source.DefaultAppRepository
+import com.sleekdeveloper.remindme.data.source.StubRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +14,5 @@ object AppRepositoryModule {
 
     @Singleton
     @Provides
-    fun provideAppRepository(): AppRepository = DefaultAppRepository()
+    fun provideAppRepository(): AppRepository = StubRepository()
 }

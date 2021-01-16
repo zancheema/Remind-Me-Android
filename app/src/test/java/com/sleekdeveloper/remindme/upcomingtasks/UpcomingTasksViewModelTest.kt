@@ -35,7 +35,7 @@ class UpcomingTasksViewModelTest {
         val task1 = Task("task_1", LocalDate.of(1999, 2, 2), LocalTime.now())
         val task2 = Task("task_2", LocalDate.now(), LocalTime.now())
         val task3 = Task("task_3", LocalDate.of(5000, 2, 1), LocalTime.now())
-        repository.addTasks(task1, task2, task3)
+        repository.saveTasks(task1, task2, task3)
         val viewModel = UpcomingTasksViewModel(repository)
 
         val tasks = viewModel.tasks.getOrAwaitValue()

@@ -36,7 +36,7 @@ class TasksViewModelTest {
         val task1 = Task("task_1", LocalDate.of(1999, 2, 2), LocalTime.now())
         val task2 = Task("task_2", LocalDate.now(), LocalTime.now())
         val task3 = Task("task_3", LocalDate.of(2011, 2, 3), LocalTime.now())
-        repository.addTasks(task1, task2, task3)
+        repository.saveTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.allTasks.getOrAwaitValue()
@@ -52,7 +52,7 @@ class TasksViewModelTest {
         val task1 = Task("task_1", LocalDate.of(1999, 2, 2), LocalTime.now())
         val task2 = Task("task_2", LocalDate.now(), LocalTime.now())
         val task3 = Task("task_3", LocalDate.of(2011, 2, 3), LocalTime.now())
-        repository.addTasks(task1, task2, task3)
+        repository.saveTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.delayedTasks.getOrAwaitValue()
@@ -66,7 +66,7 @@ class TasksViewModelTest {
         val task1 = Task("task_1", LocalDate.of(1999, 2, 2), LocalTime.now())
         val task2 = Task("task_2", LocalDate.now(), LocalTime.now())
         val task3 = Task("task_3", LocalDate.of(2011, 2, 3), LocalTime.now())
-        repository.addTasks(task1, task2, task3)
+        repository.saveTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.todayTasks.getOrAwaitValue()
@@ -84,7 +84,7 @@ class TasksViewModelTest {
             LocalDate.of(currentDate.year + 1, currentDate.month, currentDate.dayOfMonth),
             LocalTime.now()
         )
-        repository.addTasks(task1, task2, task3)
+        repository.saveTasks(task1, task2, task3)
         val viewModel = TasksViewModel(repository)
 
         val tasks = viewModel.upcomingTasks.getOrAwaitValue()

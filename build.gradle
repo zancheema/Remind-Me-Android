@@ -39,4 +39,5 @@ ext {
     espressoVersion = '3.3.0'
     hiltAndroidXVersion = "1.0.0-alpha01"
     timberVersion = '4.7.1'
+    truthVersion = '1.0'
 }

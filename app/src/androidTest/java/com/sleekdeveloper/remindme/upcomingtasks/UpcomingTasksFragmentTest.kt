@@ -47,7 +47,7 @@ class UpcomingTasksFragmentTest {
         val task1 = Task("TITLE_1", LocalDate.now())
         val task2 = Task("TITLE_2", LocalDate.of(5000, 2, 12))
         val task3 = Task("TITLE_3", LocalDate.of(2000, 11, 27))
-        runBlocking { repository.addTasks(task1, task2, task3) }
+        runBlocking { repository.saveTasks(task1, task2, task3) }
 
         launchFragmentInHiltContainer<UpcomingTasksFragment>(Bundle(), R.style.Theme_RemindMe)
 
