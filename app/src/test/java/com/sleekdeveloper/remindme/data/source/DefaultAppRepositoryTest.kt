@@ -13,6 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import java.time.LocalDate
 
+@ExperimentalCoroutinesApi
 class DefaultAppRepositoryTest {
     private val task1 = Task("title_1", LocalDate.now())
     private val task2 = Task("title_2", LocalDate.now())
