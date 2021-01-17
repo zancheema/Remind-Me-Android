@@ -49,6 +49,10 @@ class FakeTestRepository @Inject constructor() : AppRepository {
         for (t in tasks) saveTask(t)
     }
 
+    override suspend fun completeTask(task: Task) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun clearCompletedTasks() {
         TODO("Not yet implemented")
     }

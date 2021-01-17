@@ -41,6 +41,10 @@ class StubRepository : AppRepository {
         for (t in tasks) saveTask(t)
     }
 
+    override suspend fun completeTask(task: Task) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun completeTask(id: String) {
         TODO("Not yet implemented")
     }

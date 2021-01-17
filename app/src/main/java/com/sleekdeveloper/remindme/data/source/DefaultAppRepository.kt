@@ -56,10 +56,16 @@ class DefaultAppRepository(
         return localDataSource.getTaskWithId(id)
     }
 
-    override suspend fun completeTask(id: String) = withContext<Unit>(ioDispatcher) {
+    override suspend fun completeTask(task: Task) = withContext<Unit>(ioDispatcher) {
         coroutineScope {
-            launch { remoteDataSource.completeTask(id) }
-            launch { remoteDataSource.completeTask(id) }
+            launch { remoteDataSource.completeTask(task) }
+            launch { localDataSource.completeTask(task) }
+        }
+    }
+
+    override suspend fun completeTask(id: String) = withContext<Unit>(ioDispatcher) {
+        (getTaskWithId(id) as? Success)?.let { task ->
+            completeTask(task.data)
         }
     }
 
@@ -84,7 +90,7 @@ class DefaultAppRepository(
         }
     }
 
-    override suspend fun refreshTasks() {
-        TODO("Not yet implemented")
+    override suspend fun refreshTasks() = withContext(ioDispatcher) {
+        updateTasksFromRemoteDataSource()
     }
 }

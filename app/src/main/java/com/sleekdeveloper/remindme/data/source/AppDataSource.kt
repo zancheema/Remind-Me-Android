@@ -7,11 +7,13 @@ import com.sleekdeveloper.remindme.data.source.domain.Task
 interface AppDataSource {
     fun observeTasks(): LiveData<Result<List<Task>>>
 
-    fun getTasks(): Result<List<Task>>
+    suspend fun getTasks(): Result<List<Task>>
 
     suspend fun getTaskWithId(id: String): Result<Task>
 
     suspend fun saveTask(task: Task)
+
+    suspend fun completeTask(task: Task)
 
     suspend fun completeTask(id: String)
 

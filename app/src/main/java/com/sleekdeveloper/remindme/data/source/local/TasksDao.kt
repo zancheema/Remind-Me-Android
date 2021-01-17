@@ -1,5 +1,6 @@
 package com.sleekdeveloper.remindme.data.source.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -9,6 +10,9 @@ import androidx.room.Query
 interface TasksDao {
     @Query("SELECT * FROM tasks WHERE id = :taskId")
     suspend fun getTaskById(taskId: String): DbTask?
+
+    @Query("SELECT * FROM tasks")
+    fun observeTasks(): LiveData<List<DbTask>>
 
     @Query("SELECT * FROM tasks")
     suspend fun getTasks(): List<DbTask>

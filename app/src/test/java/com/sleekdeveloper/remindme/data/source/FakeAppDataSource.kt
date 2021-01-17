@@ -14,7 +14,7 @@ class FakeAppDataSource(
         TODO("Not yet implemented")
     }
 
-    override fun getTasks(): Result<List<Task>> {
+    override suspend fun getTasks(): Result<List<Task>> {
         tasks?.let { return Success(it.toList()) }
         return Error(
             Exception("Tasks not found")
@@ -28,6 +28,10 @@ class FakeAppDataSource(
 
     override suspend fun clearCompletedTasks() {
         tasks?.removeIf { it.isCompleted }
+    }
+
+    override suspend fun completeTask(task: Task) {
+        completeTask(task.id)
     }
 
     override suspend fun completeTask(id: String) {
