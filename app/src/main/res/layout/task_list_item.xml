@@ -7,7 +7,7 @@
 
         <variable
             name="task"
-            type="com.sleekdeveloper.remindme.data.source.domain.Task" />
+            type="com.sleekdeveloper.android.remindme.data.source.domain.Task" />
     </data>
 
     <androidx.cardview.widget.CardView

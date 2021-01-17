@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.sleekdeveloper.remindme.todaytasks.TodayTasksViewModel" />
+            type="com.sleekdeveloper.android.remindme.todaytasks.TodayTasksViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".todaytasks.TodayTasksFragment">
+        tools:context="com.sleekdeveloper.android.remindme.todaytasks.TodayTasksFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/tasksList"

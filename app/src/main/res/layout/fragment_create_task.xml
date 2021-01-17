@@ -7,14 +7,14 @@
 
         <variable
             name="viewmodel"
-            type="com.sleekdeveloper.remindme.createtask.CreateTaskViewModel" />
+            type="com.sleekdeveloper.android.remindme.createtask.CreateTaskViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/createTaskLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".createtask.CreateTaskFragment">
+        tools:context="com.sleekdeveloper.android.remindme.createtask.CreateTaskFragment">
 
         <EditText
             android:id="@+id/editTaskTitle"

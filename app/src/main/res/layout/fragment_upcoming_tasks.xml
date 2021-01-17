@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.sleekdeveloper.remindme.upcomingtasks.UpcomingTasksViewModel" />
+            type="com.sleekdeveloper.android.remindme.upcomingtasks.UpcomingTasksViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".upcomingtasks.UpcomingTasksFragment">
+        tools:context="com.sleekdeveloper.android.remindme.upcomingtasks.UpcomingTasksFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/tasksList"

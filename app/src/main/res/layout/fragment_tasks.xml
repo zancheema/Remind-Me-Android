@@ -7,14 +7,14 @@
 
         <variable
             name="viewmodel"
-            type="com.sleekdeveloper.remindme.tasks.TasksViewModel" />
+            type="com.sleekdeveloper.android.remindme.tasks.TasksViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tasksLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".tasks.TasksFragment">
+        tools:context="com.sleekdeveloper.android.remindme.tasks.TasksFragment">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
