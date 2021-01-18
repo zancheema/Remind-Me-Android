@@ -8,13 +8,12 @@ import com.sleekdeveloper.android.remindme.data.Result.Success
 import com.sleekdeveloper.android.remindme.data.source.AppDataSource
 import com.sleekdeveloper.android.remindme.data.source.domain.Task
 import com.sleekdeveloper.android.remindme.data.source.domain.asDatabaseEntity
-import kotlinx.coroutines.MainCoroutineDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import kotlin.Exception
 
 class LocalDataSource(
     database: AppDatabase,
-    private val ioDispatcher: MainCoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher
 ) : AppDataSource {
 
     private val tasksDao = database.tasksDao()

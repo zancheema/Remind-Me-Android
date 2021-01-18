@@ -8,7 +8,8 @@ import com.sleekdeveloper.android.remindme.R
 import com.sleekdeveloper.android.remindme.data.source.domain.Task
 
 @BindingAdapter("app:task_list_items")
-fun RecyclerView.setTaskListItems(items: List<Task>) {
+fun RecyclerView.setTaskListItems(items: List<Task>?) {
+    if (items == null) return
     if (adapter == null) adapter = TasksListAdapter()
     (adapter as TasksListAdapter).submitList(items)
 }
